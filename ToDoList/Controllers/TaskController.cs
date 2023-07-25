@@ -1,21 +1,21 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using ToDoList.Domain.ViewModels.Task;
 
 namespace ToDoList.Controllers
 {
     public class TaskController : Controller
     {
-        private readonly ILogger<TaskController> _logger;
-
-        public TaskController(ILogger<TaskController> logger)
-        {
-            _logger = logger;
-        }
-
         public IActionResult Index()
         {
             return View();
         }
 
-      
+
+        [HttpPost]
+        public async Task<IActionResult> Create(CreateTaskViewModel model)
+        {
+            return Ok();
+        }
+
     }
 }
