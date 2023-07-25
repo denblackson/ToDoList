@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/ToDoList.styles.css" asp-append-version="true" />
 </head>
-<body>
+<body class="bg-light">
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container-fluid">
@@ -20,27 +20,43 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" >Home</a>
+                            <a class="nav-link text-dark" asp-area="">Home</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="">Privacy</a>
-                        </li>
+
                     </ul>
                 </div>
             </div>
         </nav>
     </header>
+
     <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
+        <div class="row">
+            <div class="col-md-4 order-md-2 md-4">
+                <h4 class="d-flex justify-content-between align-items-cnter md-3">
+                    <span class="text-muted">Completed tasks</span>
+                    <span class="badge badge-secondary badge-pill text-muted" id="countOfCompletedTasks"></span>
+                </h4>
+                <ul class="list-group mb-3" id="completedListTasks"></ul>
+                <form>
+                    <div class="card col-md-12">
+                        <button type="submit" class="btn btn-secondary">Finish this day</button>
+                    </div>
+                </form>
+                <br />
+                <div class="form-group">
+                    <label>My notes</label>
+                    <textarea class="form-control"></textarea>
+                </div>
+            </div>
+            <div class="col-md-8 order-md-1">
+                @RenderBody()
+            </div>
+        </div>
     </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2023 - ToDoList - <a asp-area="">Privacy</a>
-        </div>
-    </footer>
+
+
+
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
