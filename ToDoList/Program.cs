@@ -1,11 +1,18 @@
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
 using ToDoList.DAL;
+using ToDoList.DAL.Interfaces;
+using ToDoList.DAL.Repositiries;
+using ToDoList.Domain.Entity;
+using ToDoList.Sevice.Implementations;
+using ToDoList.Sevice.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation(); //  .AddRazorRuntimeCompilation() nuget packages for auto html page update
 
+
+builder.Services.AddScoped<IBaseRepository<TaskEntity>, TaskRepository>();
+builder.Services.AddScoped<ITaskService, TaskService>();
 
 
 var connectionString = builder.Configuration.GetConnectionString("MSSQL");
