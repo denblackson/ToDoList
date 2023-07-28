@@ -25,6 +25,8 @@ namespace ToDoList.Sevice.Implementations
         {
             try
             {
+                model.Validate();
+
                 _logger.LogInformation($"Task creation query - {model.Name}");
                 var task = await _taskRepository.GetAll()
                     .Where(x => x.Created.Date == DateTime.Today)
@@ -64,6 +66,7 @@ namespace ToDoList.Sevice.Implementations
 
                 return new BaseResponce<TaskEntity>()
                 {
+                    Description = $"{e.Message}",
                     StatusCode = StatusCode.InternalServerError
                 };
             }
