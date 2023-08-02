@@ -4,6 +4,7 @@ using ToDoList.DAL.Interfaces;
 using ToDoList.Domain.Entity;
 using ToDoList.Domain.Enum;
 using ToDoList.Domain.Extentions;
+using ToDoList.Domain.Filters;
 using ToDoList.Domain.Responce;
 using ToDoList.Domain.ViewModels.Task;
 using ToDoList.Sevice.Interfaces;
@@ -73,18 +74,22 @@ namespace ToDoList.Sevice.Implementations
             }
         }
 
-        public async Task<IBaseResponce<IEnumerable<TaskViewModel>>> GetTasks()
+        public async Task<IBaseResponce<IEnumerable<TaskViewModel>>> GetTasks(TaskFilter filter)
         {
             try
             {
                 var tasks = await _taskRepository.GetAll()
+                    .WhereIf(!string.IsNullOrWhiteSpace(filter.Name), x => x.Name == filter.Name)
+                    .WhereIf(filter.Priority.HasValue, x => x.Priority == filter.Priority)
                     .Select(x => new TaskViewModel()
                     {
                         Id = x.Id,
                         Name = x.Name,
                         Description = x.Description,
                         IsDone = x.IsDone == true ? "Finished" : "Not finished",
-                        Priority = x.Priority.GetDisplayName(),
+                        //Priority = x.Priority.GetDisplayName(),
+                        Priority = x.Priority.ToString(),
+
                         Created = x.Created.ToLongDateString(),
                     })
                     .ToListAsync();

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ToDoList.DAL.Interfaces;
+﻿using ToDoList.DAL.Interfaces;
 using ToDoList.Domain.Entity;
 
 namespace ToDoList.DAL.Repositiries

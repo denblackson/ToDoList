@@ -4,13 +4,13 @@ namespace ToDoList.Domain.Enum
 {
     public enum Priority
     {
-        [Display(Name = "Easy")]
+        //[Display(Name = "Easy")]
         Easy = 1,
 
-        [Display(Name = "Medium")]
+//        [Display(Name = "Medium")]
         Medium = 2,
 
-        [Display(Name = "Hard")]
+  //      [Display(Name = "Hard")]
         Hard = 3
     }
 }
