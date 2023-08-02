@@ -35,6 +35,23 @@ namespace ToDoList.Controllers
         }
 
         [HttpPost]
+        public async Task<IActionResult> EndTask(long id)
+        {
+            var responce = await _taskService.EndTask(id);
+
+            if (responce.StatusCode == Domain.Enum.StatusCode.Ok)
+            {
+                return Ok(new { description = responce.Description });
+            }
+
+
+            return BadRequest(new { description = responce.Description });
+        }
+
+
+
+
+        [HttpPost]
         public async Task<IActionResult> TaskHandler(TaskFilter filter)
         {
             var response = await _taskService.GetTasks(filter);

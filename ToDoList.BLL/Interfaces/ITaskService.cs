@@ -9,6 +9,7 @@ namespace ToDoList.Sevice.Interfaces
     {
         Task<IBaseResponce<TaskEntity>> Create(CreateTaskViewModel model);
         Task<IBaseResponce<IEnumerable<TaskViewModel>>> GetTasks(TaskFilter filter);
+        Task<IBaseResponce<bool>> EndTask(long id);
     }
 
    

@@ -79,6 +79,7 @@ namespace ToDoList.Sevice.Implementations
             try
             {
                 var tasks = await _taskRepository.GetAll()
+                    .Where(x => !x.IsDone)
                     .WhereIf(!string.IsNullOrWhiteSpace(filter.Name), x => x.Name == filter.Name)
                     .WhereIf(filter.Priority.HasValue, x => x.Priority == filter.Priority)
                     .Select(x => new TaskViewModel()
@@ -106,6 +107,43 @@ namespace ToDoList.Sevice.Implementations
                 _logger.LogError(e, $"[TaskService.GetTasks]: {e.Message}");
 
                 return new BaseResponce<IEnumerable<TaskViewModel>>()
+                {
+                    Description = $"{e.Message}",
+                    StatusCode = StatusCode.InternalServerError
+                };
+            }
+        }
+
+
+        public async Task<IBaseResponce<bool>> EndTask(long id)
+        {
+            try
+            {
+                var task = await _taskRepository.GetAll().FirstOrDefaultAsync(x => x.Id == id);
+                if (task == null)
+                {
+                    return new BaseResponce<bool>()
+                    {
+                        StatusCode = StatusCode.TaskNotFound,
+                        Description = "Task not found"
+                    };
+                }
+
+                task.IsDone = true;
+
+                await _taskRepository.Update(task);
+
+                return new BaseResponce<bool>()
+                {
+                    StatusCode = StatusCode.Ok,
+                    Description = "Task is marked as done"
+                };
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, $"[TaskService.EndTask]: {e.Message}");
+
+                return new BaseResponce<bool>()
                 {
                     Description = $"{e.Message}",
                     StatusCode = StatusCode.InternalServerError
