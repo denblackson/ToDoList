@@ -19,9 +19,6 @@ namespace ToDoList.Domain.ViewModels.Task
             {
                 throw new ArgumentNullException(Description, "Enter task description");
             }
-
-            
-
         }
     }
 }
